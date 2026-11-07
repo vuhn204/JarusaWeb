@@ -1,0 +1,37 @@
+{
+  "name": "jarusa",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Tienda en línea accesible de cosméticos: React + Vite en el frontend, Express + SQLite en el backend.",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently --kill-others --names api,web --prefix-colors magenta,cyan \"npm:server\" \"npm:client\"",
+    "client": "vite",
+    "server": "node server/index.js",
+    "build": "vite build",
+    "start": "vite build && node server/index.js",
+    "preview": "vite preview",
+    "test": "node --test",
+    "db:init": "node server/init-db.js",
+    "db:reset": "node server/init-db.js --reset"
+  },
+  "dependencies": {
+    "better-sqlite3": "12.11.1",
+    "express": "4.21.2",
+    "lucide-react": "^0.383.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "vite": "^5.4.8"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

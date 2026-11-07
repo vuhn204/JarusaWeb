@@ -1,0 +1,29 @@
+# Dependencias (se instalan con npm install)
+node_modules/
+
+# Compilación y cachés
+dist/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Base de datos local (se crea sola al arrancar el servidor)
+server/data/
+
+# Variables de entorno locales
+.env
+.env.local
+.env.*.local
+
+# Registros
+*.log
+npm-debug.log*
+
+# Paquetes y archivos del sistema o del editor
+*.zip
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json

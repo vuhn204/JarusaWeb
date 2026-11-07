@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Temas: paleta de marca y colores de estado por variable ─────────── */
+:root {
+  --jar-50: 255 241 247;
+  --jar-100: 253 228 239;
+  --jar-200: 251 200 223;
+  --jar-300: 245 155 196;
+  --jar-400: 236 95 161;
+  --jar-500: 224 51 138;
+  --jar-600: 208 26 120;
+  --jar-700: 184 15 104;
+  --jar-800: 143 12 82;
+  --jar-900: 94 8 53;
+  --b1: 200 16 108; --b2: 216 34 128; /* extremo del degradado: blanco ≥ 4.5:1 */
+  --ok: 5 150 105; --ok-bg: 236 253 245; --err: 190 18 60; --err-bg: 255 241 242; --warn: 180 83 9; --warn-bg: 255 251 235;
+}
+:root[data-cb="protan"] {
+  --jar-50: 239 246 255;
+  --jar-100: 219 234 254;
+  --jar-200: 191 219 254;
+  --jar-300: 147 197 253;
+  --jar-400: 96 165 250;
+  --jar-500: 59 130 246;
+  --jar-600: 29 78 216;
+  --jar-700: 30 64 175;
+  --jar-800: 30 58 138;
+  --jar-900: 23 37 84;
+  --b1: 30 64 175; --b2: 37 99 235;
+  --ok: 29 78 216; --ok-bg: 219 234 254; --err: 194 65 12; --err-bg: 255 237 213; --warn: 82 82 91; --warn-bg: 244 244 245;
+}
+:root[data-cb="deutan"] {
+  --jar-50: 236 254 255;
+  --jar-100: 207 250 254;
+  --jar-200: 165 243 252;
+  --jar-300: 103 232 249;
+  --jar-400: 34 211 238;
+  --jar-500: 6 182 212;
+  --jar-600: 14 116 144;
+  --jar-700: 21 94 117;
+  --jar-800: 22 78 99;
+  --jar-900: 8 51 68;
+  --b1: 21 94 117; --b2: 14 116 144;
+  --ok: 21 94 117; --ok-bg: 207 250 254; --err: 194 65 12; --err-bg: 255 237 213; --warn: 82 82 91; --warn-bg: 244 244 245;
+}
+:root[data-cb="tritan"] {
+  --jar-50: 254 242 242;
+  --jar-100: 254 226 226;
+  --jar-200: 254 202 202;
+  --jar-300: 252 165 165;
+  --jar-400: 248 113 113;
+  --jar-500: 220 38 38;
+  --jar-600: 185 28 28;
+  --jar-700: 153 27 27;
+  --jar-800: 127 29 29;
+  --jar-900: 69 10 10;
+  --b1: 153 27 27; --b2: 220 38 38;
+  --ok: 14 116 144; --ok-bg: 207 250 254; --err: 153 27 27; --err-bg: 254 226 226; --warn: 82 82 91; --warn-bg: 244 244 245;
+}
+
+/* En modos para daltonismo los estados (éxito / error / aviso) dejan de usar verde y rojo */
+[data-cb]:not([data-cb="none"]) .text-emerald-600, [data-cb]:not([data-cb="none"]) .text-emerald-700 { color: rgb(var(--ok)); }
+[data-cb]:not([data-cb="none"]) .bg-emerald-50 { background-color: rgb(var(--ok-bg)); }
+[data-cb]:not([data-cb="none"]) .bg-emerald-500 { background-color: rgb(var(--ok)); }
+[data-cb]:not([data-cb="none"]) .text-rose-600, [data-cb]:not([data-cb="none"]) .text-rose-700 { color: rgb(var(--err)); }
+[data-cb]:not([data-cb="none"]) .bg-rose-50 { background-color: rgb(var(--err-bg)); }
+[data-cb]:not([data-cb="none"]) .text-amber-700, [data-cb]:not([data-cb="none"]) .text-sky-700, [data-cb]:not([data-cb="none"]) .text-blue-600 { color: rgb(var(--warn)); }
+[data-cb]:not([data-cb="none"]) .bg-amber-50, [data-cb]:not([data-cb="none"]) .bg-sky-50 { background-color: rgb(var(--warn-bg)); }
+[data-cb]:not([data-cb="none"]) .from-fuchsia-500 { --tw-gradient-from: rgb(var(--jar-400)); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent); }
+[data-cb]:not([data-cb="none"]) .to-orange-400 { --tw-gradient-to: rgb(var(--jar-700)); }
+
+@layer base {
+  body { @apply bg-paper font-sans text-neutral-800 antialiased; }
+  button { @apply cursor-pointer; }
+  :focus-visible { outline: 2px solid rgb(var(--jar-600)); outline-offset: 2px; }
+  html.big { font-size: 118%; }
+  /* Modo lector de pantalla / baja visión: foco muy visible y sin animaciones */
+  html.sr :focus-visible { outline: 4px solid rgb(var(--jar-700)); outline-offset: 3px; box-shadow: 0 0 0 7px #fff; }
+  html.sr *, html.deaf-calm * { animation: none !important; transition: none !important; }
+}
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-2.5 text-xs font-bold tracking-wide text-white shadow-md transition hover:brightness-110 active:scale-[.98] disabled:opacity-50; }
+  .btn-outline { @apply inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-6 py-2.5 text-xs font-bold tracking-wide text-neutral-700 transition hover:bg-neutral-50; }
+  .input { @apply w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-xs text-neutral-800 placeholder:text-neutral-400 focus:border-jar-500 focus:outline-none focus:ring-2 focus:ring-jar-200; }
+  .label { @apply mb-1 block text-[11px] font-semibold text-neutral-800; }
+  .card { @apply rounded-2xl bg-white shadow-card; }
+  .th { @apply px-4 py-3 text-left text-[10px] font-bold uppercase tracking-wider text-neutral-500; }
+  .td { @apply px-4 py-3 text-xs text-neutral-700; }
+}
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+.pop { animation: pop .18s ease-out; }
+/* Destello de borde para alertas visuales (modo sordos) */
+@keyframes flash { 0%, 100% { opacity: 0; } 15%, 55% { opacity: 1; } }
+.flash { opacity: 0; animation: flash 1.4s ease-out 1; } /* solo destella; luego queda oculto */
+@keyframes ring { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(14deg); } 40% { transform: rotate(-12deg); } 60% { transform: rotate(8deg); } 80% { transform: rotate(-5deg); } }
+.ring-bell { animation: ring 1s ease-in-out 2; transform-origin: top center; }
+@media (prefers-reduced-motion: reduce) { .pop, .ring-bell { animation: none; } }
+
+/* ── Modo oscuro (se compone con cualquier paleta de daltonismo) ─────── */
+html.dark { color-scheme: dark; }
+.dark body { background: #120e10; color: #ece4e8; }
+.dark .bg-white, .dark .card, .dark .input, .dark .btn-outline { background-color: #1d1719; }
+.dark .bg-paper, .dark .bg-side, .dark .bg-neutral-50 { background-color: #171214; }
+.dark .bg-neutral-100, .dark .bg-neutral-200 { background-color: #2a2226; }
+.dark .bg-jar-50, .dark .bg-jar-50\/60, .dark .bg-jar-50\/70, .dark .bg-jar-100 { background-color: rgb(var(--jar-900) / .45); }
+.dark .hover\:bg-jar-50:hover, .dark .hover\:bg-neutral-50:hover, .dark .hover\:bg-neutral-100:hover { background-color: #2a2226; }
+.dark .text-neutral-900, .dark .text-neutral-800 { color: #f4eef1; }
+.dark .text-neutral-700, .dark .text-neutral-600 { color: #d9cfd4; }
+.dark .text-neutral-500, .dark .text-neutral-400 { color: #a99ea4; }
+.dark .text-jar-600, .dark .text-jar-700, .dark .text-jar-800, .dark .text-jar-900 { color: rgb(var(--jar-300)); }
+.dark .border-neutral-100, .dark .border-neutral-200, .dark .border-neutral-300 { border-color: #3b3036; }
+.dark .divide-neutral-100 > :not([hidden]) ~ :not([hidden]) { border-color: #3b3036; }
+.dark .input, .dark .btn-outline { border-color: #3b3036; color: #f4eef1; }
+.dark .shadow-card { box-shadow: 0 2px 14px rgba(0, 0, 0, .5); }
+.dark .keep-white { background-color: #fff !important; color: rgb(var(--jar-700)) !important; }
+.dark img:not([src$=".svg"]) { filter: brightness(.9); }
+
+/* ── Contraste: textos secundarios legibles (≥ 4.5:1 sobre blanco) ─────── */
+html:not(.dark) .text-neutral-400 { color: #6b6b6b; }
+html:not(.dark) .text-neutral-500 { color: #636363; }
+
+/* ── Foco visible también sobre la cabecera y el pie de color de marca ─── */
+.site-header :focus-visible, .site-footer :focus-visible, .bg-brand :focus-visible, .toast-x:focus-visible {
+  outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 5px #111;
+}
+
+/* ── Indicador de alertas: color universal, independiente de la paleta ── */
+.alert-badge { background: #ffd400; color: #111; box-shadow: 0 0 0 1.5px #111; }
+.alert-beacon { background: #ffd400; color: #111; border: 2px solid #111; }
+.alert-beacon:hover { background: #ffe14d; }
+.alert-beacon:focus-visible { outline: 3px solid #111; outline-offset: 3px; box-shadow: 0 0 0 6px #ffd400; }
+/* reserva espacio para que el indicador no tape el final del contenido del panel */
+html.beacon .panel-main { padding-bottom: 5rem; }
+
+/* ── Temperatura visual (comodidad): velo muy suave en modo multiplicar ──
+   No cambia las paletas de daltonismo: tiñe todo por igual y conserva el contraste. */
+html[data-temp="warm"] body::after, html[data-temp="cool"] body::after {
+  content: ''; position: fixed; inset: 0; z-index: 2147483000; pointer-events: none; mix-blend-mode: multiply;
+}
+html[data-temp="warm"] body::after { background: rgb(255 170 90 / .16); }
+html[data-temp="cool"] body::after { background: rgb(120 170 255 / .13); }
+html.dark[data-temp="warm"] body::after { background: rgb(255 170 90 / .10); }
+html.dark[data-temp="cool"] body::after { background: rgb(120 170 255 / .09); }
+@media (forced-colors: active) { body::after { display: none; } }
